@@ -10,8 +10,15 @@ const isShopify = provider === 'shopify'
 const isSaleor = provider === 'saleor'
 const isSwell = provider === 'swell'
 const isVendure = provider === 'vendure'
+const withPWA = require("next-pwa");
 
-module.exports = withCommerceConfig({
+module.exports = withPWA({
+  pwa: {
+    dest: "public",
+    register: true,
+    skipWaiting: true,
+  },
+},withCommerceConfig({
   commerce,
   i18n: {
     locales: ['en-US', 'es'],
@@ -38,7 +45,7 @@ module.exports = withCommerceConfig({
         },
     ].filter(Boolean)
   },
-})
+}))
 
 // Don't delete this console log, useful to see the commerce config in Vercel deployments
 console.log('next.config.js', JSON.stringify(module.exports, null, 2))
